@@ -17,14 +17,6 @@ app.use('/login', loginRouter)
 const CompanyRouter = require('./routes/company')
 app.use('/company',CompanyRouter)
 
-const CompaniesRouter = require('./routes/companies')
-app.use('/companies',CompaniesRouter)
-
-const EmployeeRouter = require("./routes/employee")
-app.use('/employee',EmployeeRouter)
-
-const EmployeesRouter = require("./routes/employees")
-app.use('/employees',EmployeesRouter)
 
 const TestRouter = require("./routes/test")
 app.use('/test',TestRouter )
