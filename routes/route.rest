@@ -7,17 +7,20 @@ GET http://localhost:3000/login/62ffc214082d6a97ca0f1071
 
 ###
 
- POST http://localhost:3000/company
+ POST http://localhost:3000/employee
 Content-Type: application/json
 
  {
-   "CompanyName": "Steve Inc" ,
-   "CompanyIndustry": "Technology",
-   "CompanyLocation": "Leribe",
-   "CompanyLogo": "SInc",
-   "PayrollDate": "2002/12/05",
-   "CompanyContract": "Contract"
- }
+	    "companyId": "63568a2b07755ec6eb490b2a",
+        "firstName": "Bafokeng",
+        "lastName": "Futhoane",
+        "gender": "Male",
+        "email": "bafokeng.futhoane@bothouniversity.com",
+        "bankAccNo": "184739493003",
+        "bankName": "Nedbank",
+        "employmentStart": "2012-12-04"
+        
+		}
 
 ###
 

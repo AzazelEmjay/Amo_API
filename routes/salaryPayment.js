@@ -19,7 +19,7 @@ router.get('/:id', getSalaryPayment, (req, res) => {
 
 router.post('/', (req, res) => {
    const salaryPayment = new SalaryPayment({
-    employeeId: req.body.employeeId,
+    testId: req.body.testId,
     grossSalary: req.body.grossSalary,
     netSalary: req.body.netSalary,
     salaryPeriod: req.body.salaryPeriod

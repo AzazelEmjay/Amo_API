@@ -3,7 +3,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 
 const  salaryPaymentSchema = new mongoose.Schema({
-    employeeId: {
+    testId: {
        type: ObjectId,
        required: true,
        ref: "Employee"

@@ -2,22 +2,16 @@ const { ObjectId } = require('mongodb');
 const Company = require("../models/company");
 
 
-/**
-* @param {String} companyText 
-* @returns {Boolean}
-*/
+  exports.doesCompanyExist = async (CompanyName) => {
+    const company = await Company.findOne({
+        where: {CompanyName},
+    });
+    return Promise.resolve(company != null);
+};
 
-exports.doesCompanyExist = async (companyText ) =>{
-    const category = await Company.findOne({
-      text: {$regex:companyText , $options:"i"},
-    }).exec();
-  
-    return Promise.resolve(category != null)
-  }
-
-  exports.getCompanyById = async (companyID) =>{
+  exports.getCompanyById = async (companyId) =>{
     let company = await Company.findOne({
-      _id:new ObjectId(companyID),
+      _id:new ObjectId(companyId),
     }).exec()
 
     if(company !== null)
@@ -25,3 +19,4 @@ exports.doesCompanyExist = async (companyText ) =>{
     else
       return Promise.reject()
 }
+
