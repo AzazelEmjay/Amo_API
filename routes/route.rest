@@ -1,0 +1,34 @@
+GET http://localhost:3000/company
+
+###
+
+GET http://localhost:3000/login/62ffc214082d6a97ca0f1071
+
+
+###
+
+ POST http://localhost:3000/company
+Content-Type: application/json
+
+ {
+   "CompanyName": "Steve Inc" ,
+   "CompanyIndustry": "Technology",
+   "CompanyLocation": "Leribe",
+   "CompanyLogo": "SInc",
+   "PayrollDate": "2002/12/05",
+   "CompanyContract": "Contract"
+ }
+
+###
+
+PATCH  http://localhost:3000/localhost:3000/company/63121a940561217a1e9d5836
+Content-Type: application/json
+
+ {
+   "CompanyName": "BRO Inc" 
+  
+ }
+
+###
+
+ DELETE http://localhost:3000/localhost:3000/company/63121a940561217a1e9d5836
