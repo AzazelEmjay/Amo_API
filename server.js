@@ -30,4 +30,32 @@ app.use('/salarypayment',SalaryPaymentRouter)
 const EarlyWithdrawalsRouter = require("./routes/earlyWithdrawals")
 app.use('/earlywithdrawals', EarlyWithdrawalsRouter)
 
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      title: "Amo Payroll API",
+      description: "",
+      contact: {
+        name: "Africa Code Academy",
+      },
+      servers: ["http://ec2-13-245-160-50.af-south-1.compute.amazonaws.com"],
+    },
+  },
+  //
+  apis: ["./docs/endpointsdocs.js"],
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+console.log(swaggerDocs);
+
+/**
+ * Load environment variables from .env file, where API keys and passwords are configured.
+ */
+
+
 app.listen(3000, () => console.log('Server Started'))
