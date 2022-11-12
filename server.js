@@ -1,7 +1,7 @@
-import cors from 'cors';
+
 require('dotenv').config()
 
-
+const cors = require('cors')
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
@@ -13,15 +13,18 @@ db.once('open',(error)=> console.log('Connected to Database'))
 
 app.use(express.json())
 app.use(cors());
+
+const RegisterRouter = require('./routes/register')
+app.use('/register', RegisterRouter)
+
 const loginRouter = require('./routes/login')
 app.use('/login', loginRouter)
 
 const CompanyRouter = require('./routes/company')
 app.use('/company',CompanyRouter)
 
-
 const TestRouter = require("./routes/test")
-app.use('/test',TestRouter )
+app.use('/employee',TestRouter )
 
 const workingDetailsRouter = require("./routes/workingDetails")
 app.use('/workingdetails',workingDetailsRouter)
@@ -42,8 +45,7 @@ const swaggerOptions = {
       description: "",
       contact: {
         name: "Africa Code Academy",
-      },
-      servers: ["http://ec2-13-245-160-50.af-south-1.compute.amazonaws.com"],
+      }
     },
   },
   //

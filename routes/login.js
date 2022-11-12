@@ -1,55 +1,77 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
+const  {check, validationResult} = require('express-validator');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const User = require('../models/logins')
 
 
-//Getting all
-router.get('/', async (req, res) => {
-    try{
-        const users = await User.find()
-       res.json (users)
-    } catch(err){
-        res.status(500).json({ message: err.message})
-    }
-})
-//Getting One
-router.get('/:id', getUser, (req, res) => {
-     res.json(res.user)  
-})
-//Creating One
-router.post('/', (req, res) => {
-   const user = new User({
-      FirstName: req.body.FirstName,
-      LastName: req.body.LastName,
-      Email: req.body.Email,
-      PhoneNumber: req.body.PhoneNumber,
-      Password: req.body.Password,
-      Roles: req.body.Password
-   })
-   try {
-       const newUser =  user.save()
-       res.status(201).json(newUser)
-   }
-   catch(err){
-        res.status(400).json({message: err.message})
-   }
+router.post(
+    "/",
+    [
+        check("Username", "Please Enter a Valid Username")
+        .not()
+        .isEmpty(),
+      check("Password", "Please enter a valid password").isLength({
+        min: 8
+      })
+    ],
+    async (req, res) => {
+      const errors = validationResult(req);
+  
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          errors: errors.array()
+        });
+      }
+  
+      const { username, password } = req.body;
+      try {
+        let user = await User.findOne({
+          Email: username
+        });
+        
+        if (!user)
+          return res.status(400).json({
+            message: "Sorry!! user not exist"
+          });
+          const isMatch = await bcrypt.compare(password, user.Password);
+      
 
-})
+        if (!isMatch)
+          return res.status(400).json({
+            message: "Incorrect Password !"
+          });
 
-async function getUser(req, res, next){
-    let user
-    try {
-        user = await User.findById(req.params.id)
-        if (user == null){
-            return res.status(404).json({message: 'User not found' })
-        }
+        const payload = {
+          user: {
+            id: user.id
+          }
+        };
+  
+        jwt.sign(
+          payload,
+          "randomString",
+          {
+            expiresIn: 3600
+          },
+          (err, token) => {
+            if (err) throw err;
+            res.status(200).json({
+              token
+            });
+          }
+        );
+      } catch (e) {
+        // console.error(e);
+        res.status(500).json({
+          message: "Server Error"
+        });
+      }
     }
-    catch(err){
-        return res.status(500).json({message: err.message})
-    }
-    res.user = user
-    next()
-} 
+  );
+
+
 
 
 module.exports = router
