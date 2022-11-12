@@ -1,6 +1,6 @@
-require('dotenv').config()
 import cors from 'cors';
-app.use(cors());
+require('dotenv').config()
+
 
 const express = require('express')
 const app = express()
@@ -12,7 +12,7 @@ db.on('error', (error)=> console.error(error))
 db.once('open',(error)=> console.log('Connected to Database'))
 
 app.use(express.json())
-
+app.use(cors());
 const loginRouter = require('./routes/login')
 app.use('/login', loginRouter)
 
